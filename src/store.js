@@ -1,16 +1,14 @@
+import { string } from "prop-types";
+
 export const initialStore=()=>{
   return{
-    message: null,
-    todos: [
+    contacts:[
       {
-        id: 1,
-        title: "Make the bed",
-        background: null,
-      },
-      {
-        id: 2,
-        title: "Do my homework",
-        background: null,
+        name: string,
+        image: string,
+        phone: string,
+        email: string,
+        id: string
       }
     ]
   }
@@ -18,15 +16,26 @@ export const initialStore=()=>{
 
 export default function storeReducer(store, action = {}) {
   switch(action.type){
-    case 'add_task':
-
-      const { id,  color } = action.payload
-
+    case 'load_contacts': {
+      const { contacts } = action.payload;
       return {
         ...store,
-        todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
-      };
+        contacts: contacts
+      }
+
+    }
+    case 'delete_contact': {
+      const { id } = action.payload;
+      const newContacts = store.contacts.filter(contact => contact.id !== id);
+      return {
+        ...store,
+        contacts: newContacts
+      }
+    }
+
     default:
-      throw Error('Unknown action.');
+      return store;
   }    
+
+
 }

@@ -1,28 +1,53 @@
+import React, { useState } from 'react';
 
-
-export const ContactForm = ({ title, onSubmit, onChange, formData }) => {
+export const ContactForm = ({ title, onSubmit, storeName, storePhone, storeEmail, storeAddress}) => {
+    
+    const [name, setName] = useState(storeName || "");
+    const [phone, setPhone] = useState(storePhone ||""); 
+    const [email, setEmail] = useState(storePhone || "");
+    const [address, setAddress] = useState(storeAddress || "");            
+    
     return (
      <div>
         <fieldset>
             <legend>{title}</legend>
-            <form onSubmit={onSubmit}>
+            <form>
                 <div className="mb-3">
-                    <label for="name" className="form-label">Name</label>
-                    <input type="text" className="form-control" id="name" value={formData.name} onChange={onChange} />
+                    <label htmlFor="name" className="form-label">Name</label>
+                    <input type="text" className="form-control" id="name" placeholder='Type name' onChange={(evnt)=> setName(evnt.target.value)} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="phone" className="form-label">Phone</label>
-                    <input type="text" className="form-control" id="phone" value={formData.phone} onChange={onChange} />
+                    <input type="text" className="form-control" id="phone" placeholder='Type phone' onChange={(evnt)=> setPhone(evnt.target.value)} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email</label>
-                    <input type="email" className="form-control" id="email" value={formData.email} onChange={onChange} />
+                    <input type="email" className="form-control" id="email" placeholder='Type email' onChange={(evnt)=> setEmail(evnt.target.value)} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="address" className="form-label">Address</label>
-                    <input type="text" className="form-control" id="address" value={formData.address} onChange={onChange} />
+                    <input type="text" className="form-control" id="address" placeholder='Type address' onChange={(evnt)=> setAddress(evnt.target.value)} />
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary"
+                onClick={() => {
+                    onSubmit({
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        address: address,
+                        id: id
+                    });
+                }}
+                >Submit</button>
+                <button type="submit" className="btn btn-danger"
+                onClick={(evnt) => {
+                    evnt.preventDefault();
+                    setName('');
+                    setPhone('');
+                    setEmail('');
+                    setAddress('');
+                }}
+                >Cancel</button>
             </form>
         </fieldset>
      </div>

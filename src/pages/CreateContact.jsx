@@ -1,19 +1,20 @@
 import { ContactForm } from "../components/ContactForm"
 
-export const CreateContact = () => {
+export const CreateContact = ({title}) => {
+    const createContact = (body) => {
+       fetch('https://playground.4geeks.com/contact/agendas/alejajaja/contacts',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })}
     return (
         <div>
-            <h1>Create new contact</h1>
-            <ContactForm
+            <h1>{title}</h1>
+            <ContactForm 
             title={"Create new contact"}
-            onSubmit={() => {}}
-            onChange={() => {}}
-            formData={{
-                name: "",
-                phone: "",
-                email: "",
-                address: ""
-            }}
+            onSubmit={createContact}
              />
         </div>
     )

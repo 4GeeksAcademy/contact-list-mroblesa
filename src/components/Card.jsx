@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom"
 
-export const Card = ({ id, name, phone, email, address, onEdit, onDelete }) => {
+export const Card = ({ _id, image, name, phone, email, address, onEdit, onDelete }) => {
     
 
     return (
-         <div className="card mb-3 d-flex" style={{ width: 540 }}>
+         <div className="card d-flex container-fluid" style={{ width: 540 }}>
             <div className="row g-0 ">
                 <div className="col-md-4">
-                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-978409_1280.png" className="img-fluid rounded-start" alt="..." />
+                    <img src={image} className="img-fluid rounded-start" alt="..." />
                 </div>
                 <div className="col-md-8">
                     <div className="card-body">
@@ -16,7 +16,7 @@ export const Card = ({ id, name, phone, email, address, onEdit, onDelete }) => {
                         <p className="card-text">Email: {email}</p>
                         <p className="card-text">Address: {address}</p>
                         <div className="">
-                        <Link to={`/edit-contact/${id}`}>
+                        <Link to={`/edit-contact/${_id}`}>
                         <button onClick={()=> onEdit()} className="btn btn-primary">Edit</button>
                         </Link>
                         <button onClick={()=> onDelete()} className="btn btn-danger">Delete</button>
