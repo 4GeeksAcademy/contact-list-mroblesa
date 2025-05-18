@@ -1,0 +1,14 @@
+.px-4 {
+    color: black;
+}
+.mx-1 {
+    color: grey;
+    font-size: 0.875rem;
+    margin-bottom: 0%;
+}
+.trash :hover {
+        color: red;
+    }
+.px-4:hover {
+    color: blue;
+}

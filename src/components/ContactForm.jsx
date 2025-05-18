@@ -4,15 +4,15 @@ export const ContactForm = ({ title, onSubmit, storeName, storePhone, storeEmail
     
     const [name, setName] = useState(storeName || "");
     const [phone, setPhone] = useState(storePhone ||""); 
-    const [email, setEmail] = useState(storePhone || "");
+    const [email, setEmail] = useState(storeEmail || "");
     const [address, setAddress] = useState(storeAddress || "");            
     
     return (
-     <div>
+     <div className="container-fluid p-4">
         <fieldset>
             <legend>{title}</legend>
-            <form>
-                <div className="mb-3">
+            <form className="container-fluid">
+                <div className="m-1">
                     <label htmlFor="name" className="form-label">Name</label>
                     <input type="text" className="form-control" id="name" placeholder='Type name' onChange={(evnt)=> setName(evnt.target.value)} />
                 </div>
@@ -28,14 +28,14 @@ export const ContactForm = ({ title, onSubmit, storeName, storePhone, storeEmail
                     <label htmlFor="address" className="form-label">Address</label>
                     <input type="text" className="form-control" id="address" placeholder='Type address' onChange={(evnt)=> setAddress(evnt.target.value)} />
                 </div>
-                <button type="submit" className="btn btn-primary"
+                <button type="submit" className="btn btn-primary mx-2"
                 onClick={() => {
-                    onSubmit({
-                        name: name,
-                        phone: phone,
-                        email: email,
-                        address: address,
-                        id: id
+                    onSubmit(
+                        {
+                        storeName: name,
+                        storePhone: phone,
+                        storeEmail: email,
+                        storeAddress: address
                     });
                 }}
                 >Submit</button>

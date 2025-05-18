@@ -3,15 +3,15 @@ import { useParams } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 
-export const EditContact = ({title}) => {
+export const EditContact = ({ title }) => {
     const { id } = useParams();
     const { store } = useGlobalReducer();
 
     const selectedContact = store.contacts.filter(contact => contact.id === id);
 
 
-    const editContact = (body, id ) => {
-        fetch(`https://playground.4geeks.com/contact/agendas/alejajaja/contacts/${id}`,{
+    const editContact = (body) => {
+        fetch(`https://playground.4geeks.com/contact/agendas/alejajaja/contacts/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -23,15 +23,15 @@ export const EditContact = ({title}) => {
     return (
         <div>
             {title}
-            <ContactForm 
-            title={'Edit Contact'}
-            key={selectedContact.id}
-            onSubmit={editContact}
-            storeName={selectedContact.name}
-            storePhone={selectedContact.phone}
-            storeEmail={selectedContact.email}
-            storeAddress={selectedContact.address}
-             />
+            <ContactForm
+                title={'Edit Contact'}
+                key={selectedContact.id}
+                onSubmit={editContact}
+                storeName={selectedContact.name}
+                storePhone={selectedContact.phone}
+                storeEmail={selectedContact.email}
+                storeAddress={selectedContact.address}
+            />
         </div>
     )
 }

@@ -5,11 +5,10 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
+  const { store, dispatch } = useGlobalReducer();
+  const navigate = useNavigate();
 
-	const { store, dispatch } = useGlobalReducer()
-	const navigate = useNavigate();
-
-	useEffect(() => {
+  useEffect(() => {
     const getContacts = async () => {
       try {
         const response = await fetch(
@@ -20,57 +19,54 @@ export const Home = () => {
         dispatch({
           type: "load_contacts",
           payload: {
-            contacts: data || []}
+            contacts: data.contacts || [],
+          },
         });
-        
       } catch (error) {
         console.error("Error obteniendo contactos:", error);
         dispatch({
           type: "load_contacts",
           payload: {
-            contacts: Array.isArray(data) ? data : [] 
-          }
+            contacts: [],
+          },
         });
       }
     };
     getContacts();
+    console.log("Contactos cargados", store.contacts);
   }, []);
 
-	const deleteContact = (id) => {
-  fetch(`https://playground.4geeks.com/contact/agendas/alejajaja/contacts/${id}`, {
-    method: 'DELETE',
-  })
-    .then((response) => {
-      if (response.ok) {
-        dispatch({ type: 'delete_contact', payload: { id: id } });
+  const deleteContact = (id) => {
+    fetch(
+      `https://playground.4geeks.com/contact/agendas/alejajaja/contacts/${id}`,
+      {
+        method: "DELETE",
       }
-    })
-    .catch((error) => {
-      console.error("Error eliminando contacto:", error);
-    });
-}
+    )
+      .then((response) => {
+        if (response.ok) {
+          dispatch({ type: "delete_contact", payload: { id } });
+        } else {
+          console.error("Error eliminando contacto");
+        }
+      })
+      .catch((error) => console.error("Error:", error));
+  };
 
-
-
-
-	return (
-		<div className="text-center mt-5">
-			{
-				store.contacts?.map((contact) => (
-					<Card
-						name={contact.name}
-						image={rigoImageUrl}
-						key={contact.id}
-						phone={contact.phone}
-						email={contact.email}
-						address={contact.address}
-						onEdit={() => navigate(`/edit-contact/${contact.id}`)}
-						onDelete={deleteContact(contact.id)}
-					/>
-				))
-			}
-	
-		</div>
-	);
-	
-}; 
+  return (
+    <div className="text-center mt-5">
+      {store.contacts.map((contact) => (
+        <Card
+          name={contact.name}
+          image={rigoImageUrl}
+          key={contact.id}
+          phone={contact.phone}
+          email={contact.email}
+          address={contact.address}
+          onEdit={() => navigate(`/edit-contact/${contact._id}`)}
+          onDelete={() => deleteContact(contact._id)}
+        />
+      ))}
+    </div>
+  );
+};
