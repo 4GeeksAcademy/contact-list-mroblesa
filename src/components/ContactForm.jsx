@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 
-export const ContactForm = ({ title, onSubmit, storeName, storePhone, storeEmail, storeAddress}) => {
+export const ContactForm = ({ title, onSubmit, onCancel, storeName, storePhone, storeEmail, storeAddress}) => {
     
-    const [name, setName] = useState(storeName || "");
-    const [phone, setPhone] = useState(storePhone ||""); 
-    const [email, setEmail] = useState(storeEmail || "");
-    const [address, setAddress] = useState(storeAddress || "");            
+    const [name, setName] = useState(storeName || '');
+    const [phone, setPhone] = useState(storePhone ||''); 
+    const [email, setEmail] = useState(storeEmail || '');
+    const [address, setAddress] = useState(storeAddress || '');            
     
+    const handleSubmit = (event) => {
+        event.preventDefault();
+       const body = { name, phone, email, address };
+        onSubmit(body);
+    }
+
     return (
      <div className="container-fluid p-4">
         <fieldset>
             <legend>{title}</legend>
-            <form className="container-fluid">
+            <form className="container-fluid" onSubmit={handleSubmit} >
                 <div className="m-1">
                     <label htmlFor="name" className="form-label">Name</label>
                     <input type="text" className="form-control" id="name" placeholder='Type name' onChange={(evnt)=> setName(evnt.target.value)} />
@@ -29,24 +35,9 @@ export const ContactForm = ({ title, onSubmit, storeName, storePhone, storeEmail
                     <input type="text" className="form-control" id="address" placeholder='Type address' onChange={(evnt)=> setAddress(evnt.target.value)} />
                 </div>
                 <button type="submit" className="btn btn-primary mx-2"
-                onClick={() => {
-                    onSubmit(
-                        {
-                        storeName: name,
-                        storePhone: phone,
-                        storeEmail: email,
-                        storeAddress: address
-                    });
-                }}
+            
                 >Submit</button>
-                <button type="submit" className="btn btn-danger"
-                onClick={(evnt) => {
-                    evnt.preventDefault();
-                    setName('');
-                    setPhone('');
-                    setEmail('');
-                    setAddress('');
-                }}
+                <button type="cancel" className="btn btn-danger"
                 >Cancel</button>
             </form>
         </fieldset>

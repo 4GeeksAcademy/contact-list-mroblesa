@@ -59,7 +59,7 @@ export const Home = () => {
         <Card
           name={contact.name}
           image={rigoImageUrl}
-          key={contact.id}
+          id={contact._id}
           phone={contact.phone}
           email={contact.email}
           address={contact.address}

@@ -1,19 +1,14 @@
 import { ContactForm } from "../components/ContactForm"
 
 export const CreateContact = ({ title }) => {
-    const createContact = async (event) => {
+    const createContact = async (body) => {
         event.preventDefault();
 
         try {
             const response = await fetch("https://playground.4geeks.com/contact/agendas/alejajaja/contacts", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: "",
-                    email: "",
-                    phone: "",
-                    address: ""
-                }),
+                body: JSON.stringify(body),
             });
 
             const newContact = await response.json();
@@ -33,8 +28,10 @@ export const CreateContact = ({ title }) => {
         <div>
             <h1>{title}</h1>
             <ContactForm
+            //revisar como le paso el body y arreglar el post 
                 title={"Create new contact"}
                 onSubmit={createContact}
+
             />
         </div>
     )
